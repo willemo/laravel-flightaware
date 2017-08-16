@@ -1,0 +1,19 @@
+{
+    "name": "willemo/laravel-flightaware",
+    "description": "Laravel service provider for the FlightAware FlightXML V3 API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Willem Oostendorp",
+            "email": "willem@wioo.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4",
+        "illuminate/support": "^5.4.0",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "prefer-stable" : true
+}
