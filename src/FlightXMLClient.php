@@ -8,10 +8,25 @@ use Psr\Http\Message\ResponseInterface;
 
 class FlightXMLClient
 {
+    /**
+     * The client config.
+     *
+     * @var array
+     */
     protected $config;
 
+    /**
+     * The HTTP client.
+     *
+     * @var Client
+     */
     protected $client;
 
+    /**
+     * Instantiate the FlightXMLClient with its contig.
+     *
+     * @param array $config The client config array
+     */
     public function __construct(array $config = [])
     {
         $resolver = new OptionsResolver;
@@ -21,6 +36,11 @@ class FlightXMLClient
         $this->config = $resolver->resolve($config);
     }
 
+    /**
+     * Get the configured HTTP client.
+     *
+     * @return Client
+     */
     public function getClient()
     {
         if ($this->client === null) {
@@ -36,6 +56,15 @@ class FlightXMLClient
         return $this->client;
     }
 
+    /**
+     * Get information about flights for a specific aircraft.
+     *
+     * @param  string $ident   The aircraft identifier
+     * @param  array  $options The optional query parameters
+     * @return array           All information about flights for the given aircraft
+     *
+     * @see https://flightaware.com/commercial/flightxml/v3/apiref.rvt#op_FlightInfoStatus
+     */
     public function getFlightInfoStatus($ident, array $options = [])
     {
         $options['ident'] = $ident;
@@ -56,6 +85,12 @@ class FlightXMLClient
         return $this->makeRequest('FlightInfoStatus', $queryParams, 'flights');
     }
 
+    /**
+     * Configures the config array.
+     *
+     * @param  OptionsResolver $resolver The options resolver instance
+     * @return void
+     */
     protected function configureConfig(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -68,7 +103,15 @@ class FlightXMLClient
         ]);
     }
 
-    protected function makeRequest($endpoint, $queryParams, $key)
+    /**
+     * Make a request to the API.
+     *
+     * @param  string $endpoint    The endpoint to make the request to
+     * @param  array  $queryParams The array with query parameters
+     * @param  string $key         The key used in the response from the API
+     * @return array               The reponse data from the API
+     */
+    public function makeRequest($endpoint, $queryParams, $key)
     {
         $response = $this->getClient()->request('GET', $endpoint, [
             'query' => $queryParams,
@@ -77,6 +120,14 @@ class FlightXMLClient
         return $this->parseResponse($response, $key);
     }
 
+    /**
+     * Parse the response from the API.
+     *
+     * @param  ResponseInterface $response The response from the API
+     * @param  string            $key      The key used in the response from the
+     *                                     API
+     * @return array                       The reponse data from the API
+     */
     protected function parseResponse(ResponseInterface $response, $key)
     {
         $body = json_decode($response->getBody(), true);
