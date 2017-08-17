@@ -36,4 +36,16 @@ class FlightXMLServiceProvider extends ServiceProvider
             __DIR__.'/../config/flightxml.php' => config_path('flightxml.php'),
         ]);
     }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            FlightXMLClient::class,
+        ];
+    }
 }
