@@ -33,7 +33,7 @@ class FlightXMLServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'../config/flightxml.php' => config_path('flightxml.php'),
+            __DIR__.'/../config/flightxml.php' => config_path('flightxml.php'),
         ]);
     }
 }
