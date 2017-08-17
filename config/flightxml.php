@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'username' => 'YourUsername',
+    'username' => env('FLIGHTXML_USERNAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,6 +22,6 @@ return [
     |
     */
 
-    'api_key' => 'YourApiKey',
+    'api_key' => env('FLIGHTXML_API_KEY'),
 
 ];
