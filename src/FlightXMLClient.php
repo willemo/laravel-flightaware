@@ -115,6 +115,7 @@ class FlightXMLClient
     {
         $response = $this->getClient()->request('GET', $endpoint, [
             'query' => $queryParams,
+            'http_errors' => false,
         ]);
 
         return $this->parseResponse($response, $key);
