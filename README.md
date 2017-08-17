@@ -38,13 +38,27 @@ php artisan vendor:publish --provider="Willemo\LaravelFlightAware\FlightXMLServi
 
 ## Configuration
 
-You can configure the package in the `config/flightxml.php` file. You'll have to add your username and API key from FlightAware.
+You can configure the package in the `config/flightxml.php` file. You'll have to add your username and API key from FlightAware to your environment with the following keys:
+
+- `FLIGHTXML_USERNAME`
+- `FLIGHTXML_API_KEY`
 
 ## Usage
 
 You can use the `FlightXML` facade to make calls to the FlightAware API. Right now the endpoints listed below are supported. The methods use the same arguments as the API reference lists.
 
-- [FlightInfoStatus](https://flightaware.com/commercial/flightxml/v3/apiref.rvt#op_FlightInfoStatus): `FlightXML::getFlightInfoStatus($ident, $options = [])`
+### FlightInfoStatus
+
+```php
+FlightXML::getFlightInfoStatus($ident, [
+    'include_ex_data' => 0,
+    'filter' => '',
+    'howMany' => 15,
+    'offset' => 0,
+]);
+```
+
+[Link to API reference](https://flightaware.com/commercial/flightxml/v3/apiref.rvt#op_FlightInfoStatus)
 
 ## Note
 
