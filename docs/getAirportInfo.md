@@ -11,7 +11,7 @@ FlightXML::getAirportInfo($airportCode);
 ## Response
 
 ```php
-$response = [
+[
     "airport_code" => "EHGG",
     "name" => "Groningen Eelde",
     "elevation" => 17.0,
@@ -22,7 +22,7 @@ $response = [
     "timezone" => ":Europe/Amsterdam",
     "country_code" => "NL",
     "wiki_url" => "http://en.wikipedia.org/wiki/Groningen_Airport_Eelde",
-];
+]
 ```
 
 ## API reference
