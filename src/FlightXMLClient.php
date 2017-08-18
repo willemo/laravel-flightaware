@@ -4,6 +4,7 @@ namespace Willemo\LaravelFlightAware;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 
 class FlightXMLClient
@@ -113,10 +114,13 @@ class FlightXMLClient
      */
     public function makeRequest($endpoint, $queryParams, $key)
     {
-        $response = $this->getClient()->request('GET', $endpoint, [
-            'query' => $queryParams,
-            'http_errors' => false,
-        ]);
+        try {
+            $response = $this->getClient()->request('GET', $endpoint, [
+                'query' => $queryParams,
+            ]);
+        } catch (ClientException $e) {
+            $response = $e->getResponse();
+        }
 
         return $this->parseResponse($response, $key);
     }
@@ -136,7 +140,7 @@ class FlightXMLClient
         if ($response->getStatusCode() != 200 ||
             array_key_exists('error', $body)
         ) {
-            throw new \Exception($body['error']);
+            throw new \Exception($body['error'], $response->getStatusCode());
         }
 
         reset($body);
