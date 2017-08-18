@@ -159,10 +159,12 @@ class FlightXMLClient
     {
         $body = json_decode($response->getBody(), true);
 
-        if ($response->getStatusCode() != 200 ||
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode != 200 ||
             array_key_exists('error', $body)
         ) {
-            throw new \Exception($body['error'], $response->getStatusCode());
+            throw new FlightXMLException($body['error'], $statusCode);
         }
 
         reset($body);
