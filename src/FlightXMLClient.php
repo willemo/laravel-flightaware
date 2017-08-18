@@ -58,6 +58,27 @@ class FlightXMLClient
     }
 
     /**
+     * Get information about an airport given an airport code.
+     *
+     * @param  string $airportCode The airport code
+     * @return array               All information about the airport
+     *
+     * @see https://flightaware.com/commercial/flightxml/v3/apiref.rvt#op_AirportInfo
+     */
+    public function getAirportInfo($airportCode)
+    {
+        $options['airport_code'] = $airportCode;
+
+        $resolver = new OptionsResolver;
+
+        $resolver->setRequired('airport_code');
+
+        $queryParams = $resolver->resolve($options);
+
+        return $this->makeRequest('AirportInfo', $queryParams);
+    }
+
+    /**
      * Get information about flights for a specific aircraft.
      *
      * @param  string $ident   The aircraft identifier
@@ -110,9 +131,10 @@ class FlightXMLClient
      * @param  string $endpoint    The endpoint to make the request to
      * @param  array  $queryParams The array with query parameters
      * @param  string $key         The key used in the response from the API
+     *                             (optional)
      * @return array               The reponse data from the API
      */
-    public function makeRequest($endpoint, $queryParams, $key)
+    public function makeRequest($endpoint, $queryParams, $key = null)
     {
         try {
             $response = $this->getClient()->request('GET', $endpoint, [
@@ -130,10 +152,10 @@ class FlightXMLClient
      *
      * @param  ResponseInterface $response The response from the API
      * @param  string            $key      The key used in the response from the
-     *                                     API
+     *                                     API (optional)
      * @return array                       The reponse data from the API
      */
-    protected function parseResponse(ResponseInterface $response, $key)
+    protected function parseResponse(ResponseInterface $response, $key = null)
     {
         $body = json_decode($response->getBody(), true);
 
@@ -147,7 +169,11 @@ class FlightXMLClient
 
         $firstKey = key($body);
 
-        $data = $body[$firstKey][$key];
+        $data = $body[$firstKey];
+
+        if ($key !== null) {
+            return $data[$key];
+        }
 
         return $data;
     }
