@@ -1,6 +1,6 @@
 # Laravel FlightAware
 
-Laravel service provider for the FlightAware FlightXML V3 API
+Laravel service provider for the FlightAware FlightXML V3 API.
 
 ## Installation
 
@@ -45,20 +45,10 @@ You can configure the package in the `config/flightxml.php` file. You'll have to
 
 ## Usage
 
-You can use the `FlightXML` facade to make calls to the FlightAware API. Right now the endpoints listed below are supported. The methods use the same arguments as the API reference lists.
+You can use the `FlightXML` facade to make calls to the FlightAware API. Right now the endpoints listed below are supported. The methods use the same arguments as the API reference lists. For more information about the endpoints, see the files in the `docs` folder.
 
-### FlightInfoStatus
-
-```php
-FlightXML::getFlightInfoStatus($ident, [
-    'include_ex_data' => 0,
-    'filter' => '',
-    'howMany' => 15,
-    'offset' => 0,
-]);
-```
-
-[Link to API reference](https://flightaware.com/commercial/flightxml/v3/apiref.rvt#op_FlightInfoStatus)
+- `FlightXML::getAirportInfo($airportCode);`
+- `FlightXML::getFlightInfoStatus($ident, $options = []);`
 
 ## Note
 
