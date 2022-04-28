@@ -2,6 +2,10 @@
 
 Laravel service provider for the FlightAware FlightXML V3 API.
 
+## This project is abandoned
+
+This project is no longer supported.
+
 ## Installation
 
 You can download this package with Composer:
